@@ -1,0 +1,16 @@
+dim: 1
+batch_size: 512
+n_blocks: 4
+output_folder: '/work/jmustafi/bachelorarbeit/tauFF/nf/output'
+hidden_nodes_nn: 100
+hidden_layers_nn: 2
+n_samples: 1000
+clamp: 0.01
+name: 'gauss_to_gauss'
+n_epochs: 150
+learning_rate: 0.005
+scheduler: 0.99
+improvement_threshold: 0.01
+target_distribution: 'gaussian' # change by hand
+latent_distribution: 'gaussian' # change by hand
+coupling_block: 'rnvp' # change by hand
