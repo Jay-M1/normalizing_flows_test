@@ -31,6 +31,7 @@ NAME = config['name']
 EPOCHS = config['n_epochs']
 LR = config['learning_rate']
 SCHEDULER = config['scheduler']
+COUPLING_BLOCK = config['coupling_block'].lower()
 
 log_path = os.path.join(log_dir, f'{NAME}.log')
 logging.basicConfig(
@@ -56,12 +57,17 @@ start_time = time.time()
 
 inn = Ff.SequenceINN(DIM)
 for _ in range(N_BLOCKS):
-    # use RNVP Flow. Its parameters are learned by a MLP
+    # use for example RNVP Flow. Its parameters are learned by a MLP
     # clamp is a hyperparameter that influences the regular RNVP transformation to not diverge too much
-    #inn.append(Fm.RNVPCouplingBlock, subnet_constructor=mlp_constructor, clamp=CLAMP)
-    inn.append(Fm.NICECouplingBlock, subnet_constructor=mlp_constructor)
-    #inn.append(Fm.AffineCouplingOneSided, subnet_constructor=mlp_constructor, clamp=CLAMP)
-
+    match COUPLING_BLOCK:
+        case 'rnvp':
+            inn.append(Fm.RNVPCouplingBlock, subnet_constructor=mlp_constructor, clamp=CLAMP)
+        case 'nice':
+            inn.append(Fm.NICECouplingBlock, subnet_constructor=mlp_constructor)
+        case 'affine_one_sided':
+            inn.append(Fm.AffineCouplingOneSided, subnet_constructor=mlp_constructor, clamp=CLAMP)
+        case _:
+            raise ValueError(f"Unknown coupling block type: {COUPLING_BLOCK}")
 
 train(model=inn,
     name=NAME,

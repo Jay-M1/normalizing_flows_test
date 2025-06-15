@@ -1,16 +1,16 @@
 dim: 1
-batch_size: 512 # just for displaying
+batch_size: 512 # just for displaying samples of pdf
 n_blocks: 4
 plot_folder: 'output'
 hidden_nodes_nn: 100
 hidden_layers_nn: 2
 n_samples: 1000
 clamp: 0.01
-name: 'gauss_to_gauss'
+name: 'Gauss_to_Gauss'
 n_epochs: 150
 learning_rate: 0.005
-scheduler: 0.99 
+scheduler: 0.99
 improvement_threshold: 0.01
-target_distribution: 'gaussian' # change by hand
-latent_distribution: 'gaussian' # change by hand
-coupling_block: 'rnvp' # change by hand
+target_distribution: 'gaussian'
+latent_distribution: 'gaussian'
+coupling_block: 'nice'

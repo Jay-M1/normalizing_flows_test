@@ -22,6 +22,8 @@ EPOCHS = config['n_epochs']
 LR = config['learning_rate']
 SCHEDULER = config['scheduler']
 IMPROVEMENT_THRESHOLD = config['improvement_threshold']
+TARGET_DIST = config['target_distribution'].lower()
+LATENT_DIST = config['latent_distribution'].lower()
 
 def mlp_constructor(input_dim, output_dim, hidden_layers= HIDDEN_LAYERS_NN, hidden_nodes=HIDDEN_NODES_NN):
     """
@@ -46,7 +48,11 @@ def mlp_constructor(input_dim, output_dim, hidden_layers= HIDDEN_LAYERS_NN, hidd
     return nn.Sequential(*layers)
 
 def target_distribution():
-    return dist.MultivariateNormal(5*torch.ones(DIM), torch.eye(DIM))
+    match TARGET_DIST:
+        case 'gaussian':
+            return dist.MultivariateNormal(5*torch.ones(DIM), torch.eye(DIM))
+        case _:
+            raise ValueError(f"Unknown target distribution: {TARGET_DIST}")
 
 def target_pdf(z):
     return target_distribution().log_prob(z).exp()
@@ -57,7 +63,11 @@ def loss(density, y, log_jacobians):
     return -log_jacobians.mean() - torch.log(density(y)+1e-9).mean()
 
 def latent_distribution():
-    return dist.MultivariateNormal(torch.zeros(DIM), torch.eye(DIM))
+    match LATENT_DIST:
+        case 'gaussian':
+            return dist.MultivariateNormal(torch.zeros(DIM), torch.eye(DIM))
+        case _:
+            raise ValueError(f"Unknown latent distribution: {LATENT_DIST}")
 
 def train(model,
         name=None,

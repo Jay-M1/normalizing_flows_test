@@ -1,0 +1,27 @@
+2025-06-15 12:23:46,409 - INFO - 
+
+2025-06-15 12:23:46,409 - INFO - ----------------------------------------------
+2025-06-15 12:23:46,409 - INFO - Loaded configuration:
+2025-06-15 12:23:46,410 - INFO -   dim: 1
+2025-06-15 12:23:46,410 - INFO -   batch_size: 512
+2025-06-15 12:23:46,410 - INFO -   n_blocks: 4
+2025-06-15 12:23:46,410 - INFO -   plot_folder: output
+2025-06-15 12:23:46,410 - INFO -   hidden_nodes_nn: 100
+2025-06-15 12:23:46,410 - INFO -   hidden_layers_nn: 2
+2025-06-15 12:23:46,410 - INFO -   n_samples: 1000
+2025-06-15 12:23:46,410 - INFO -   clamp: 0.01
+2025-06-15 12:23:46,410 - INFO -   name: Gauss_to_Gauss
+2025-06-15 12:23:46,410 - INFO -   n_epochs: 150
+2025-06-15 12:23:46,410 - INFO -   learning_rate: 0.005
+2025-06-15 12:23:46,410 - INFO -   scheduler: 0.99
+2025-06-15 12:23:46,410 - INFO -   improvement_threshold: 0.01
+2025-06-15 12:23:46,410 - INFO -   target_distribution: gaussian
+2025-06-15 12:23:46,410 - INFO -   latent_distribution: gaussian
+2025-06-15 12:23:46,410 - INFO -   coupling_block: nice
+2025-06-15 12:23:49,045 - INFO - Epoch 0, Loss: 13.9963
+2025-06-15 12:23:54,526 - INFO - Epoch 15, Loss: 7.1551
+2025-06-15 12:23:59,517 - INFO - Epoch 30, Loss: 2.0572
+2025-06-15 12:24:04,847 - INFO - Epoch 45, Loss: 1.5039
+2025-06-15 12:24:09,199 - INFO - Early stopping at epoch 59 (no improvement for at least 1.0% for 20 epochs).
+2025-06-15 12:24:09,433 - INFO - Model is bijective: True
+2025-06-15 12:24:09,434 - INFO - Total runtime: 23.02 seconds
