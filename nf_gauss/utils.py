@@ -5,13 +5,14 @@ import torch.distributions as dist
 
 from matplotlib import pyplot as plt
 import yaml
+import logging
 
 with open('/work/jmustafi/bachelorarbeit/tauFF/nf/configs/config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 DIM = config['dim']
 BATCHSIZE = config['batch_size']
 N_BLOCKS = config['n_blocks']
-OUTPUT_FOLDER = config['output_folder']
+PLOT_FOLDER = config['plot_folder']
 HIDDEN_NODES_NN = config['hidden_nodes_nn']
 HIDDEN_LAYERS_NN = config['hidden_layers_nn']
 N_SAMPLES = config['n_samples']
@@ -97,14 +98,14 @@ def train(model,
             else:
                 epochs_no_improve += 1
             if epochs_no_improve >= 20:
-                print(f"Early stopping at epoch {epoch} (no improvement for at least {IMPROVEMENT_THRESHOLD*100}% for 20 epochs).")
+                logging.info(f"Early stopping at epoch {epoch} (no improvement for at least {IMPROVEMENT_THRESHOLD*100}% for 20 epochs).")
                 break
 
         if scheduler is not None:
             scheduler.step()
         
         if (epoch % int(n_epochs/10.) == 0):
-            print(f"Epoch {epoch}, Loss: {loss_value.item():.4f}")
+            logging.info(f"Epoch {epoch}, Loss: {loss_value.item():.4f}")
 
             # plot
             z_samples = pz.sample((N_SAMPLES,)).to(device)
@@ -123,7 +124,7 @@ def train(model,
             if jupyter_nb:
                 plt.show()
             else:
-                plt.savefig(f"{OUTPUT_FOLDER}/epoch_{epoch}.png")
+                plt.savefig(f"{PLOT_FOLDER}/epoch_{epoch}.png")
 
 def is_bijective(model):
     """
